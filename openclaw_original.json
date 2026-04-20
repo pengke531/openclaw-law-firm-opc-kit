@@ -1,0 +1,196 @@
+{
+  "_package": {
+    "name": "legal-opc-agent-pack",
+    "mode": "incremental-import",
+    "version": "2.0"
+  },
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "__DOMAIN_ROOT__/workspace/skills/shared"
+      ]
+    }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "__DOMAIN_ROOT__/workspace",
+      "memorySearch": {
+        "enabled": true
+      },
+      "subagents": {
+        "maxChildrenPerAgent": 3,
+        "maxSpawnDepth": 2,
+        "runTimeoutSeconds": 900
+      }
+    },
+    "list": [
+      {
+        "id": "law_main",
+        "workspace": "__DOMAIN_ROOT__/workspace",
+        "identity": {
+          "name": "A01 Legal Commander",
+          "emoji": "A01"
+        },
+        "tools": {
+          "profile": "messaging",
+          "alsoAllow": [
+            "read",
+            "write",
+            "sessions_spawn",
+            "subagents",
+            "memory_search",
+            "memory_get",
+            "memory_store",
+            "web_search",
+            "web_fetch",
+            "browser",
+            "agents_list",
+            "tts"
+          ]
+        },
+        "subagents": {
+          "allowAgents": [
+            "law_finance",
+            "law_case",
+            "law_business"
+          ]
+        }
+      },
+      {
+        "id": "law_finance",
+        "workspace": "__DOMAIN_ROOT__/agents/law_finance",
+        "identity": {
+          "name": "A02 Finance Agent",
+          "emoji": "A02"
+        },
+        "tools": {
+          "profile": "minimal",
+          "alsoAllow": [
+            "read",
+            "write",
+            "exec",
+            "sessions_spawn",
+            "subagents",
+            "memory_search",
+            "memory_get",
+            "memory_store",
+            "web_search",
+            "web_fetch",
+            "browser",
+            "agents_list"
+          ],
+          "exec": {
+            "host": "gateway",
+            "security": "full",
+            "ask": "off",
+            "safeBins": [
+              "pwsh",
+              "bash",
+              "sh",
+              "python",
+              "python3"
+            ],
+            "strictInlineEval": true,
+            "timeoutSec": 180
+          }
+        },
+        "subagents": {
+          "allowAgents": [
+            "law_case",
+            "law_business"
+          ]
+        }
+      },
+      {
+        "id": "law_case",
+        "workspace": "__DOMAIN_ROOT__/agents/law_case",
+        "identity": {
+          "name": "A03 Case Agent",
+          "emoji": "A03"
+        },
+        "tools": {
+          "profile": "minimal",
+          "alsoAllow": [
+            "read",
+            "write",
+            "exec",
+            "sessions_spawn",
+            "subagents",
+            "memory_search",
+            "memory_get",
+            "memory_store",
+            "web_search",
+            "web_fetch",
+            "browser",
+            "agents_list"
+          ],
+          "exec": {
+            "host": "gateway",
+            "security": "full",
+            "ask": "off",
+            "safeBins": [
+              "pwsh",
+              "bash",
+              "sh",
+              "python",
+              "python3"
+            ],
+            "strictInlineEval": true,
+            "timeoutSec": 180
+          }
+        },
+        "subagents": {
+          "allowAgents": [
+            "law_finance",
+            "law_business"
+          ]
+        }
+      },
+      {
+        "id": "law_business",
+        "workspace": "__DOMAIN_ROOT__/agents/law_business",
+        "identity": {
+          "name": "A04 Business & Compliance Agent",
+          "emoji": "A04"
+        },
+        "tools": {
+          "profile": "minimal",
+          "alsoAllow": [
+            "read",
+            "write",
+            "exec",
+            "sessions_spawn",
+            "subagents",
+            "memory_search",
+            "memory_get",
+            "memory_store",
+            "web_search",
+            "web_fetch",
+            "browser",
+            "agents_list"
+          ],
+          "exec": {
+            "host": "gateway",
+            "security": "full",
+            "ask": "off",
+            "safeBins": [
+              "pwsh",
+              "bash",
+              "sh",
+              "python",
+              "python3"
+            ],
+            "strictInlineEval": true,
+            "timeoutSec": 180
+          }
+        },
+        "subagents": {
+          "allowAgents": [
+            "law_finance",
+            "law_case"
+          ]
+        }
+      }
+    ]
+  }
+}

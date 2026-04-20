@@ -1,0 +1,80 @@
+{
+  "_package": {
+    "name": "legal-opc-agent-pack",
+    "mode": "incremental-import",
+    "version": "2.1"
+  },
+  "skills": {
+    "load": {
+      "extraDirs": [
+        "__DOMAIN_ROOT__/workspace/skills/shared"
+      ]
+    }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "__DOMAIN_ROOT__/workspace",
+      "memorySearch": {
+        "enabled": true
+      },
+      "subagents": {
+        "maxChildrenPerAgent": 3,
+        "maxSpawnDepth": 2,
+        "runTimeoutSeconds": 900
+      }
+    },
+    "list": [
+      {
+        "id": "law_main",
+        "workspace": "__DOMAIN_ROOT__/workspace",
+        "identity": {
+          "name": "A01 Legal Commander",
+          "emoji": "A01",
+          "role": "总指挥，最终决策者"
+        },
+        "tools": {
+          "profile": "messaging",
+          "alsoAllow": [
+            "read", "write", "sessions_spawn", "subagents",
+            "memory_search", "memory_get", "memory_store",
+            "web_search", "web_fetch", "browser", "agents_list"
+          ]
+        },
+        "subagents": {
+          "allowAgents": [
+            "law_finance",
+            "law_case", 
+            "law_business",
+            "law_quality"
+          ]
+        }
+      },
+      {
+        "id": "law_quality",
+        "workspace": "__DOMAIN_ROOT__/agents/law_quality",
+        "identity": {
+          "name": "A05 Quality Monitor",
+          "emoji": "A05",
+          "role": "质量监控专家，主动监控模式"
+        },
+        "tools": {
+          "profile": "minimal",
+          "alsoAllow": [
+            "read", "write", "sessions_spawn", "subagents",
+            "memory_search", "memory_get", "memory_store",
+            "web_search", "web_fetch", "browser", "agents_list"
+          ]
+        },
+        "subagents": {
+          "allowAgents": ["law_main"]
+        }
+      }
+    ]
+  },
+  "safety": {
+    "decisionProtocol": "strict_centralized",
+    "qualityControl": "mandatory",
+    "riskAssessment": "mandatory",
+    "complianceChecking": "mandatory"
+  }
+}
