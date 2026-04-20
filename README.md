@@ -1,186 +1,63 @@
-# OpenClaw Legal OPC Overlay Kit
+# 法律OPC系统 - OpenClaw法律事务所Agent包
 
-This repository is a cross-platform, additive legal-operations agent pack for
-existing OpenClaw environments.
+一键安装即可为您的OpenClaw系统添加专业的法律事务所Agent！
 
-It does **not** replace the host's current setup. Instead, it imports one legal
-domain into the host's existing `~/.openclaw` state root and adds four
-namespaced legal agents:
-
-- `law_main` -> `A01 Legal Commander`
-- `law_finance` -> `A02 Finance Agent`
-- `law_case` -> `A03 Case Agent`
-- `law_business` -> `A04 Business & Compliance Agent`
-
-## Design goals
-
-- additive deployment into an existing OpenClaw host
-- no overwrite of the host's base topology, models, channels, or provider wiring
-- one legal commander plus three specialist legal agents
-- layered legal memory with private + shared namespaces
-- portable on Windows and macOS
-- stable without N8N
-
-## What this package adds
-
-- an additive `openclaw.json` overlay focused on agent architecture
-- complete legal agent role files
-- legal constitution in `workspace/AGENTS.md`
-- legal memory rules in `workspace/MEMORY.md`
-- legal workflow templates
-- additive deployment and smoke-test scripts
-- required-skill manifest for rebuilding the shared legal skill layer
-
-## What this package does not do
-
-- it does not delete the host's existing agents
-- it does not replace the host's base `main`
-- it does not force a dedicated profile
-- it does not hardcode the host's API credentials or provider choices
-- it does not vendor every third-party skill payload
-
-## Quick install
-
-macOS:
+## ⚡ 快速开始
 
 ```bash
 git clone https://github.com/pengke531/openclaw-law-firm-opc-kit.git
 cd openclaw-law-firm-opc-kit
-chmod +x ./install-law-firm.sh
-./install-law-firm.sh
+chmod +x install.sh
+./install.sh
 ```
 
-Windows:
+## 🤖 已安装的Agent
 
-```powershell
-git clone https://github.com/pengke531/openclaw-law-firm-opc-kit.git
-cd openclaw-law-firm-opc-kit
-powershell -ExecutionPolicy Bypass -File .\install-law-firm.ps1
+- **A01 Legal Commander** - 法律总指挥，负责案件决策和质量管理
+- **A02 Finance Agent** - 财务管理专家，负责费用管理和财务风险
+- **A03 Case Agent** - 案件处理专家，负责法律分析和文书起草
+- **A04 Business Agent** - 业务专家，负责合同审查和合规管理
+- **A05 Quality Monitor** - 质量监控专家，负责质量检查和风险预警
+
+## 📋 使用方法
+
+安装完成后重启OpenClaw，然后就可以使用：
+
+```
+@law_main 你好
+@law_main 处理新案件：合同纠纷
+@law_main 审查租赁合同
 ```
 
-## After install
+## ⚖️ 专业功能
 
-1. Optionally copy the generated template:
+- 案件管理和进度跟踪
+- 合同审查和起草
+- 财务管理和费用核算
+- 质量监控和风险预警
+- 法律研究支持
 
-```text
-~/.openclaw/domains/legal-opc/.env.template
-```
+详细使用指南请查看 [USER_GUIDE.md](USER_GUIDE.md)
 
-to:
+## 🔄 卸载
 
-```text
-~/.openclaw/domains/legal-opc/.env
-```
-
-2. Fill only the integrations the host actually wants to use:
-
-- `ZAI_API_KEY`
-- `TAVILY_API_KEY`
-- `FEISHU_APP_ID`
-- `FEISHU_APP_SECRET`
-- `MINIMAX_API_KEY`
-
-3. Validate the host config:
+如需卸载，安装脚本会自动创建备份文件，恢复即可：
 
 ```bash
-openclaw config validate
+# 备份文件位置: ~/.openclaw/openclaw.json.backup-law-*
+cp ~/.openclaw/openclaw.json.backup-law-* ~/.openclaw/openclaw.json
 ```
 
-4. Start OpenClaw normally:
+## 📚 文档
 
-```bash
-openclaw gateway
-```
+- [USER_GUIDE.md](USER_GUIDE.md) - 完整使用指南
+- [FAULT_TOLERANCE.md](FAULT_TOLERANCE.md) - 容错机制说明
+- [LEGAL_AGENT_INTERACTION_ANALYSIS.md](LEGAL_AGENT_INTERACTION_ANALYSIS.md) - Agent交互分析
 
-## Incremental import model
+## ⚠️ 重要提醒
 
-This repository installs into:
-
-```text
-~/.openclaw/domains/legal-opc
-```
-
-and merges legal overlay settings into:
-
-```text
-~/.openclaw/openclaw.json
-```
-
-During install:
-
-- the host config is backed up
-- legal agents are appended if missing
-- legal agent topology is merged without replacing unrelated host config
-- the host `main` is given access to `law_main` as a subagent if `main` exists
-
-The host keeps responsibility for:
-
-- model provider setup
-- API keys and secrets
-- channel installation
-- optional tool integrations beyond the legal pack itself
-
-## Skill strategy
-
-This repository keeps a shared legal skill manifest, then synchronizes
-recommended global skills from the host skill catalog into:
-
-```text
-~/.openclaw/domains/legal-opc/workspace/skills/shared
-```
-
-Reference:
-
-- `workspace/docs/runbooks/required-skills.md`
-
-## Core references
-
-- `workspace/docs/architecture/legal-opc-architecture-v1.md`
-- `workspace/docs/architecture/legal-role-matrix-v1.md`
-- `workspace/docs/architecture/legal-workflows-v1.md`
-- `workspace/docs/runbooks/deployment-and-migration.md`
-- `workspace/docs/runbooks/smoke-test.md`
-- `workspace/docs/runbooks/stable-operations-v1.md`
-
-## 🆕 最新优化 (v2.1)
-
-### 按照金融OPC高标准全面优化
-
-#### ✨ 新增功能
-- **A05质量监控Agent**: 专门的质量监控、风险预警、进度跟踪
-- **案件权限控制**: 全局案件受理开关、客户黑名单管理
-- **质量控制体系**: 多层次质量检查、风险预警机制
-- **容错保护机制**: Agent健康监控、数据容错、操作保护
-
-#### 📚 完整文档
-- **USER_GUIDE.md**: 详细的使用攻略，包含民事/合同/企业顾问等专业服务流程
-- **FAULT_TOLERANCE.md**: 七层容错保护机制设计
-- **LEGAL_OPC_OPTIMIZATION_REPORT.md**: 全面优化完成报告
-
-#### 🔧 控制工具
-```bash
-# 查看案件权限状态
-bash workspace/scripts/legal_control.sh status
-
-# 启用/禁用案件受理
-bash workspace/scripts/legal_control.sh enable/disable
-
-# 客户黑名单管理
-bash workspace/scripts/legal_control.sh client-add/remove/list
-```
-
-#### 📊 优化效果
-- 风险控制: 高风险 → 低风险 (降低90%)
-- 质量保障: 无监控 → 全面监控
-- 系统稳定性: 循环依赖 → 稳定可靠
-- 操作安全性: 40% → 95% (提升137.5%)
-
-### 使用改进配置
-```bash
-# 使用改进的配置文件（包含A05质量监控）
-cp openclaw_improved.json ~/.openclaw/domains/legal-opc/openclaw.json
-```
+本系统仅供辅助法律服务工作，不能替代执业律师的专业判断。
 
 ---
 
-**版本**: v2.1.0 | **更新**: 2026-04-21 | **质量**: ⭐⭐⭐⭐⭐
+**License**: MIT | **Star** ⭐ if you find this useful!
