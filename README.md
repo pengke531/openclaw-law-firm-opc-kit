@@ -7,22 +7,16 @@
 ### 🪟 Windows用户
 
 ```powershell
-# 1. 克隆项目
 git clone https://github.com/pengke531/openclaw-law-firm-opc-kit.git
 cd openclaw-law-firm-opc-kit
-
-# 2. 运行安装脚本
 powershell -ExecutionPolicy Bypass -File .\install-law-opc.ps1
 ```
 
 ### 🍎 macOS/Linux用户
 
 ```bash
-# 1. 克隆项目
 git clone https://github.com/pengke531/openclaw-law-firm-opc-kit.git
 cd openclaw-law-firm-opc-kit
-
-# 2. 运行安装脚本
 chmod +x install.sh
 ./install.sh
 ```
@@ -59,28 +53,29 @@ chmod +x install.sh
 
 ### Windows
 ```powershell
-# 查找备份文件
-dir $env:USERPROFILE\.openclaw\openclaw.json.backup-law-*
-
-# 恢复最新备份
-cp $env:USERPROFILE\.openclaw\openclaw.json.backup-law-最新时间 $env:USERPROFILE\.openclaw\openclaw.json
+# 删除Agent目录
+Remove-Item -Recurse -Force $env:USERPROFILE\.openclaw\agents\law_*
 ```
 
 ### macOS/Linux
 ```bash
-# 恢复备份
-cp ~/.openclaw/openclaw.json.backup-law-* ~/.openclaw/openclaw.json
+# 删除Agent目录
+rm -rf ~/.openclaw/agents/law_*
 ```
 
 ## 📚 文档
 
 - [USER_GUIDE.md](USER_GUIDE.md) - 完整使用指南
 - [FAULT_TOLERANCE.md](FAULT_TOLERANCE.md) - 容错机制说明
-- [LEGAL_AGENT_INTERACTION_ANALYSIS.md](LEGAL_AGENT_INTERACTION_ANALYSIS.md) - Agent交互分析
 
 ## ⚠️ 重要提醒
 
 本系统仅供辅助法律服务工作，不能替代执业律师的专业判断。
+
+## 💬 问题反馈
+
+如遇到安装问题，请提交Issue：
+https://github.com/pengke531/openclaw-law-firm-opc-kit/issues
 
 ---
 
